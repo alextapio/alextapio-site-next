@@ -4,7 +4,7 @@ import {
   getCategorySlug,
 } from "../templates/business-plans";
 
-const baseUrl = "https://www.alextapio.com";
+const baseUrl = "https://alextapio.com";
 
 export function GET() {
   const categories = businessPlanCategories

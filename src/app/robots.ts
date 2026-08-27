@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://www.alextapio.com/sitemap.xml",
-    host: "https://www.alextapio.com",
+    sitemap: "https://alextapio.com/sitemap.xml",
+    host: "https://alextapio.com",
   };
 }

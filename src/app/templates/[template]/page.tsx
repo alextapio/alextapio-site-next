@@ -51,7 +51,7 @@ export default async function BusinessPlanTemplatePage({
   const plan = getBusinessPlanTemplate(template);
 
   if (!plan) notFound();
-  const baseUrl = "https://www.alextapio.com";
+  const baseUrl = "https://alextapio.com";
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

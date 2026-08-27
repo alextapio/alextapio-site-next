@@ -11,7 +11,7 @@ import styles from "./page.module.css";
 const title = "Free Business Plan Templates";
 const description =
   "Download free, industry-specific business plan templates by Alex Tapio, including a one-pager, financial model, and lifetime updates.";
-const baseUrl = "https://www.alextapio.com";
+const baseUrl = "https://alextapio.com";
 
 const getPage = (pageParam?: string) => {
   const requestedPage = Number.parseInt(pageParam ?? "1", 10);

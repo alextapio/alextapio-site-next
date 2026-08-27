@@ -5,7 +5,7 @@ import {
   getCategorySlug,
 } from "./templates/business-plans";
 
-const baseUrl = "https://www.alextapio.com";
+const baseUrl = "https://alextapio.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();

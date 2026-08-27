@@ -16,7 +16,7 @@ const dmSerif = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.alextapio.com"),
+  metadataBase: new URL("https://alextapio.com"),
   title: {
     default: "Alex Tapio | Strategic Consultant in Dubai",
     template: "%s",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  authors: [{ name: "Alex Tapio", url: "https://www.alextapio.com" }],
+  authors: [{ name: "Alex Tapio", url: "https://alextapio.com" }],
   creator: "Alex Tapio",
   openGraph: {
     type: "website",

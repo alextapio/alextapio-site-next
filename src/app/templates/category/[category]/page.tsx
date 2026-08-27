@@ -58,7 +58,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     nextPage === 1
       ? `/templates/category/${categorySlug}`
       : `/templates/category/${categorySlug}?page=${nextPage}`;
-  const baseUrl = "https://www.alextapio.com";
+  const baseUrl = "https://alextapio.com";
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

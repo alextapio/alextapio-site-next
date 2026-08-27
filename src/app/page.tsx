@@ -7,8 +7,8 @@ const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Alex Tapio",
-  url: "https://www.alextapio.com",
-  image: `https://www.alextapio.com${headshot.src}`,
+  url: "https://alextapio.com",
+  image: `https://alextapio.com${headshot.src}`,
   jobTitle: "Strategic Consultant",
   email: "contact@alextapio.com",
   address: {
