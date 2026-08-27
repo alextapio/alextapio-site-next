@@ -8,7 +8,7 @@ import {
 } from "../../business-plans";
 import styles from "../../page.module.css";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 20;
 
 type CategoryPageProps = {
   params: Promise<{ category: string }>;
@@ -93,22 +93,18 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           <span aria-hidden="true">/</span>
           <span>{category}</span>
         </nav>
-        <h1 id="templates-title">{category}</h1>
+        <h1 id="templates-title">{category} business plans</h1>
         <div className={styles.list}>
           {visibleTemplates.map((template) => (
             <AnalyticsLink className={styles.template} href={`/templates/${template.slug}`} eventName="select_content" eventParams={{ content_type: "business_plan_template", content_id: template.slug, template_category: categorySlug }} key={template.slug}>
-              <span>
-                <strong>{template.title}</strong>
-                <small>{template.description}</small>
-              </span>
-              <span aria-hidden="true">→</span>
+              <strong>{template.title}</strong>
             </AnalyticsLink>
           ))}
         </div>
         {(page > 1 || hasMore) && (
           <nav className={styles.pagination} aria-label="Template pagination">
             {page > 1 && <AnalyticsLink href={pageHref(page - 1)} eventName="pagination_click" eventParams={{ direction: "previous", category: categorySlug }}>← Previous</AnalyticsLink>}
-            {hasMore && <AnalyticsLink href={pageHref(page + 1)} eventName="pagination_click" eventParams={{ direction: "next", category: categorySlug }}>See more →</AnalyticsLink>}
+            {hasMore && <AnalyticsLink href={pageHref(page + 1)} eventName="pagination_click" eventParams={{ direction: "next", category: categorySlug }}>See more ↓</AnalyticsLink>}
           </nav>
         )}
       </section>
