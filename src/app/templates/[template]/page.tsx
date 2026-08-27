@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import AnalyticsLink from "../../analytics-link";
 import { notFound } from "next/navigation";
 import creatorImage from "../../alex-cream-bg.png";
 import {
@@ -169,18 +169,18 @@ export default async function BusinessPlanTemplatePage({
 
         <div className={styles.content}>
           <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            <Link href="/templates">Templates</Link>
+            <AnalyticsLink href="/templates" eventName="navigation_click" eventParams={{ destination: "templates" }}>Templates</AnalyticsLink>
             <span aria-hidden="true">/</span>
-            <Link href={`/templates/category/${getCategorySlug(plan.category)}`}>
+            <AnalyticsLink href={`/templates/category/${getCategorySlug(plan.category)}`} eventName="navigation_click" eventParams={{ destination: "category", category: getCategorySlug(plan.category) }}>
               {plan.category}
-            </Link>
+            </AnalyticsLink>
             <span aria-hidden="true">/</span>
             <span>{plan.title}</span>
           </nav>
 
           <h1>{plan.title}</h1>
 
-          <Link className={styles.creatorBadge} href="/" aria-label="About Alex Tapio">
+          <AnalyticsLink className={styles.creatorBadge} href="/" ariaLabel="About Alex Tapio" eventName="navigation_click" eventParams={{ destination: "home", source: "creator_badge" }}>
             <span className={styles.creatorAvatar}>
               <Image src={creatorImage} alt="" fill sizes="32px" />
             </span>
@@ -188,13 +188,13 @@ export default async function BusinessPlanTemplatePage({
               Created by former <strong>Deloitte</strong>
               <span className={styles.statusDot} aria-hidden="true" /> consultant
             </span>
-          </Link>
+          </AnalyticsLink>
 
           <p className={styles.description}>
             {plan.description}
           </p>
 
-          <BrevoEmbed />
+          <BrevoEmbed templateSlug={plan.slug} templateCategory={getCategorySlug(plan.category)} />
 
           <p className={styles.includes}>
             <svg aria-hidden="true" viewBox="0 0 16 16">

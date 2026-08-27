@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import AnalyticsLink from "./analytics-link";
 import headshot from "./headshot.webp";
 import styles from "./page.module.css";
 
@@ -46,23 +46,23 @@ export default function Home() {
             </p>
             <p className={styles.services}>
               What I do:{" "}
-              <a href="https://finamodel.com" target="_blank" rel="noreferrer">
+              <AnalyticsLink href="https://finamodel.com" target="_blank" rel="noreferrer" eventName="service_click" eventParams={{ service: "financial_models" }}>
                 Financial Models
-              </a>
+              </AnalyticsLink>
               <span aria-hidden="true"> • </span>
-              <a href="https://makeslides.com" target="_blank" rel="noreferrer">
+              <AnalyticsLink href="https://makeslides.com" target="_blank" rel="noreferrer" eventName="service_click" eventParams={{ service: "strategy_presentations" }}>
                 Strategy Presentations
-              </a>
+              </AnalyticsLink>
               <span aria-hidden="true"> • </span>
-              <Link href="/templates">Business Plans</Link>
+              <AnalyticsLink href="/templates" eventName="service_click" eventParams={{ service: "business_plans" }}>Business Plans</AnalyticsLink>
             </p>
             <p className={styles.services}>
               Reach out:{" "}
-              <a href="mailto:contact@alextapio.com">Email</a>
+              <AnalyticsLink href="mailto:contact@alextapio.com" eventName="contact_click" eventParams={{ method: "email" }}>Email</AnalyticsLink>
               <span aria-hidden="true"> • </span>
-              <a href="https://www.linkedin.com/in/alextapio/" target="_blank" rel="noreferrer">
+              <AnalyticsLink href="https://www.linkedin.com/in/alextapio/" target="_blank" rel="noreferrer" eventName="contact_click" eventParams={{ method: "linkedin" }}>
                 Linkedin
-              </a>
+              </AnalyticsLink>
             </p>
           </div>
         </section>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import AnalyticsLink from "../../../analytics-link";
 import { notFound } from "next/navigation";
 import {
   businessPlanTemplates,
@@ -87,28 +87,28 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
         <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-          <Link href="/">Alex Tapio</Link>
+          <AnalyticsLink href="/" eventName="navigation_click" eventParams={{ destination: "home" }}>Alex Tapio</AnalyticsLink>
           <span aria-hidden="true">/</span>
-          <Link href="/templates">Templates</Link>
+          <AnalyticsLink href="/templates" eventName="navigation_click" eventParams={{ destination: "templates" }}>Templates</AnalyticsLink>
           <span aria-hidden="true">/</span>
           <span>{category}</span>
         </nav>
         <h1 id="templates-title">{category}</h1>
         <div className={styles.list}>
           {visibleTemplates.map((template) => (
-            <Link className={styles.template} href={`/templates/${template.slug}`} key={template.slug}>
+            <AnalyticsLink className={styles.template} href={`/templates/${template.slug}`} eventName="select_content" eventParams={{ content_type: "business_plan_template", content_id: template.slug, template_category: categorySlug }} key={template.slug}>
               <span>
                 <strong>{template.title}</strong>
                 <small>{template.description}</small>
               </span>
               <span aria-hidden="true">→</span>
-            </Link>
+            </AnalyticsLink>
           ))}
         </div>
         {(page > 1 || hasMore) && (
           <nav className={styles.pagination} aria-label="Template pagination">
-            {page > 1 && <Link href={pageHref(page - 1)}>← Previous</Link>}
-            {hasMore && <Link href={pageHref(page + 1)}>See more →</Link>}
+            {page > 1 && <AnalyticsLink href={pageHref(page - 1)} eventName="pagination_click" eventParams={{ direction: "previous", category: categorySlug }}>← Previous</AnalyticsLink>}
+            {hasMore && <AnalyticsLink href={pageHref(page + 1)} eventName="pagination_click" eventParams={{ direction: "next", category: categorySlug }}>See more →</AnalyticsLink>}
           </nav>
         )}
       </section>

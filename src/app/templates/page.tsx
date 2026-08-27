@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import AnalyticsLink from "../analytics-link";
 import {
   businessPlanCategories,
   businessPlanTemplates,
@@ -82,35 +82,37 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
         <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-          <Link href="/">Alex Tapio</Link>
+          <AnalyticsLink href="/" eventName="navigation_click" eventParams={{ destination: "home" }}>Alex Tapio</AnalyticsLink>
           <span aria-hidden="true">/</span>
           <span>Templates</span>
         </nav>
         <CategoryFilters initiallyOpen={Boolean(selectedCategory)}>
           <nav className={styles.categories} aria-label="Business plan categories">
-            <Link aria-current={selectedCategory ? undefined : "page"} href="/templates">All</Link>
+            <AnalyticsLink ariaCurrent={selectedCategory ? undefined : "page"} href="/templates" eventName="select_content" eventParams={{ content_type: "category", content_id: "all" }}>All</AnalyticsLink>
             {businessPlanCategories.map((category) => (
-            <Link
-              aria-current={selectedCategory === category ? "page" : undefined}
+            <AnalyticsLink
+              ariaCurrent={selectedCategory === category ? "page" : undefined}
               href={`/templates/category/${getCategorySlug(category)}`}
+              eventName="select_content"
+              eventParams={{ content_type: "category", content_id: getCategorySlug(category) }}
                 key={category}
               >
                 {category}
-              </Link>
+              </AnalyticsLink>
             ))}
           </nav>
         </CategoryFilters>
         <div className={styles.list}>
           {visibleTemplates.map((template) => (
-            <Link className={styles.template} href={`/templates/${template.slug}`} key={template.slug}>
+            <AnalyticsLink className={styles.template} href={`/templates/${template.slug}`} eventName="select_content" eventParams={{ content_type: "business_plan_template", content_id: template.slug, template_category: getCategorySlug(template.category) }} key={template.slug}>
               <strong>{template.title}</strong>
-            </Link>
+            </AnalyticsLink>
           ))}
         </div>
         {(page > 1 || hasMore) && (
           <nav className={styles.pagination} aria-label="Template pagination">
-            {page > 1 && <Link href={pageHref(page - 1)}>← Previous</Link>}
-            {hasMore && <Link href={pageHref(page + 1)}>See more ↓</Link>}
+            {page > 1 && <AnalyticsLink href={pageHref(page - 1)} eventName="pagination_click" eventParams={{ direction: "previous" }}>← Previous</AnalyticsLink>}
+            {hasMore && <AnalyticsLink href={pageHref(page + 1)} eventName="pagination_click" eventParams={{ direction: "next" }}>See more ↓</AnalyticsLink>}
           </nav>
         )}
       </section>

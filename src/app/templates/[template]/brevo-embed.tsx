@@ -1,11 +1,32 @@
+"use client";
+
 import Script from "next/script";
+import { useRef } from "react";
+import { trackEvent } from "../../analytics-link";
 import styles from "./page.module.css";
 
 const BREVO_ACTION =
   "https://6db3ffe5.sibforms.com/serve/MUIFAMPZL_kTrqGBhZ5B02iIWZvFrQOvMp_RDZAkPGnj4xZcfmwZdr9RhRFcWCuDFYE03kPfgjiT3KcDfEbunwECB6tgNdzNrwtmvMMyOgGEA-PPtPE2qNYkSTHL-PH1QoqynI9kH1PJLrJ-hK-wFgMRWLC4mR6BZ7uEmFt9yZ9peR295AeszQzsUvAmHw5Bw3T9X-gJPgvTEzdu";
 
 // Direct Brevo embed. Keep Brevo's identifiers and class hooks unchanged.
-export default function BrevoEmbed() {
+type BrevoEmbedProps = {
+  templateSlug: string;
+  templateCategory: string;
+};
+
+export default function BrevoEmbed({ templateSlug, templateCategory }: BrevoEmbedProps) {
+  const hasStarted = useRef(false);
+  const eventParams = {
+    template_slug: templateSlug,
+    template_category: templateCategory,
+  };
+
+  const trackFormStart = () => {
+    if (hasStarted.current) return;
+    hasStarted.current = true;
+    trackEvent("download_form_started", eventParams);
+  };
+
   return (
     <div className={styles.brevoEmbed}>
       <link
@@ -77,7 +98,7 @@ export default function BrevoEmbed() {
               direction: "ltr",
             }}
           >
-            <form id="sib-form" method="POST" action={BREVO_ACTION} data-type="subscription">
+            <form id="sib-form" method="POST" action={BREVO_ACTION} data-type="subscription" onSubmit={() => trackEvent("generate_lead", { lead_source: "business_plan_download", ...eventParams })}>
               <div style={{ padding: "8px 0" }}>
                 <div className="sib-input sib-form-block">
                   <div className="form__entry entry_block">
@@ -107,6 +128,7 @@ export default function BrevoEmbed() {
                           placeholder="EMAIL"
                           data-required="true"
                           required
+                          onFocus={trackFormStart}
                         />
                       </div>
                     </div>
