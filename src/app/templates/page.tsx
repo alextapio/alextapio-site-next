@@ -45,9 +45,8 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
     ? businessPlanTemplates.filter((template) => template.category === selectedCategory)
     : businessPlanTemplates;
   const page = getPage(pageParam);
-  const start = (page - 1) * PAGE_SIZE;
-  const visibleTemplates = templates.slice(start, start + PAGE_SIZE);
-  const hasMore = start + PAGE_SIZE < templates.length;
+  const visibleTemplates = templates.slice(0, page * PAGE_SIZE);
+  const hasMore = visibleTemplates.length < templates.length;
   const pageHref = (nextPage: number) => {
     const params = new URLSearchParams();
     if (selectedCategory) params.set("category", selectedCategory);
@@ -62,7 +61,7 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
     numberOfItems: visibleTemplates.length,
     itemListElement: visibleTemplates.map((template, index) => ({
       "@type": "ListItem",
-      position: start + index + 1,
+      position: index + 1,
       url: `${baseUrl}/templates/${template.slug}`,
       name: template.title,
     })),
@@ -109,10 +108,9 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
             </AnalyticsLink>
           ))}
         </div>
-        {(page > 1 || hasMore) && (
+        {hasMore && (
           <nav className={styles.pagination} aria-label="Template pagination">
-            {page > 1 && <AnalyticsLink href={pageHref(page - 1)} eventName="pagination_click" eventParams={{ direction: "previous" }}>← Previous</AnalyticsLink>}
-            {hasMore && <AnalyticsLink href={pageHref(page + 1)} eventName="pagination_click" eventParams={{ direction: "next" }}>See more ↓</AnalyticsLink>}
+            <AnalyticsLink scroll={false} href={pageHref(page + 1)} eventName="pagination_click" eventParams={{ direction: "next" }}>See more ↓</AnalyticsLink>
           </nav>
         )}
       </section>

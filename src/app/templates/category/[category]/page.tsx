@@ -51,9 +51,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const requestedPage = Number.parseInt(pageParam ?? "1", 10);
   const page = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1;
   const templates = businessPlanTemplates.filter((template) => template.category === category);
-  const start = (page - 1) * PAGE_SIZE;
-  const visibleTemplates = templates.slice(start, start + PAGE_SIZE);
-  const hasMore = start + PAGE_SIZE < templates.length;
+  const visibleTemplates = templates.slice(0, page * PAGE_SIZE);
+  const hasMore = visibleTemplates.length < templates.length;
   const pageHref = (nextPage: number) =>
     nextPage === 1
       ? `/templates/category/${categorySlug}`
@@ -75,7 +74,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     numberOfItems: visibleTemplates.length,
     itemListElement: visibleTemplates.map((template, index) => ({
       "@type": "ListItem",
-      position: start + index + 1,
+      position: index + 1,
       url: `${baseUrl}/templates/${template.slug}`,
       name: template.title,
     })),
@@ -101,10 +100,9 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
             </AnalyticsLink>
           ))}
         </div>
-        {(page > 1 || hasMore) && (
+        {hasMore && (
           <nav className={styles.pagination} aria-label="Template pagination">
-            {page > 1 && <AnalyticsLink href={pageHref(page - 1)} eventName="pagination_click" eventParams={{ direction: "previous", category: categorySlug }}>← Previous</AnalyticsLink>}
-            {hasMore && <AnalyticsLink href={pageHref(page + 1)} eventName="pagination_click" eventParams={{ direction: "next", category: categorySlug }}>See more ↓</AnalyticsLink>}
+            <AnalyticsLink scroll={false} href={pageHref(page + 1)} eventName="pagination_click" eventParams={{ direction: "next", category: categorySlug }}>See more ↓</AnalyticsLink>
           </nav>
         )}
       </section>

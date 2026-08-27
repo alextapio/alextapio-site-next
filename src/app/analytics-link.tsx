@@ -32,6 +32,7 @@ type AnalyticsLinkProps = {
   className?: string;
   target?: string;
   rel?: string;
+  scroll?: boolean;
   ariaCurrent?: "page";
   ariaLabel?: string;
 };
@@ -44,6 +45,7 @@ export default function AnalyticsLink({
   className,
   target,
   rel,
+  scroll,
   ariaCurrent,
   ariaLabel,
 }: AnalyticsLinkProps) {
@@ -53,6 +55,7 @@ export default function AnalyticsLink({
       className={className}
       target={target}
       rel={rel}
+      scroll={scroll}
       aria-current={ariaCurrent}
       aria-label={ariaLabel}
       onClick={() => trackEvent(eventName, eventParams)}
